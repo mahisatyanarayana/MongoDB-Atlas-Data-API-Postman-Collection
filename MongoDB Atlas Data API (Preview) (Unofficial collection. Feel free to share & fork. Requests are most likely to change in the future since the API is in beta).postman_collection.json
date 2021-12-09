@@ -1,0 +1,574 @@
+{
+	"info": {
+		"_postman_id": "9e2f0b9b-8a36-4be8-82e2-6aa08f64dd94",
+		"name": "MongoDB Atlas Data API (Preview) (Unofficial collection. Feel free to share & fork. Requests are most likely to change in the future since the API is in beta)",
+		"description": "MongoDB [Atlas Data API (Preview)](https://docs.atlas.mongodb.com/api/data-api/#read-and-write-with-the-data-api--preview-). This is an unofficial collection and not supported by MongoDB. Feel free to share & fork the collection. Requests are most likely to change in the future since the API is still in preview stage",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Find a Single Document",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"should have document field\", function () {",
+							"    pm.expect(jsonData).to.have.property('document');",
+							"})",
+							"",
+							"pm.test(\"should return a valid notNull document\", function () {",
+							"    pm.expect(jsonData.document).to.not.be.null;",
+							"    pm.expect(jsonData.document).to.not.be.undefined; ",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "{{api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collection\":\"{{collection}}\",\n    \"database\":\"{{database}}\",\n    \"dataSource\":\"{{dataSource}}\",\n    \"filter\": { },\n    \"projection\": { },\n    \"sort\": { },\n    \"limit\": null,\n    \"skip\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://data.mongodb-api.com/app/{{DataAPIAppID}}/endpoint/data/beta/action/findOne",
+					"protocol": "https",
+					"host": [
+						"data",
+						"mongodb-api",
+						"com"
+					],
+					"path": [
+						"app",
+						"{{DataAPIAppID}}",
+						"endpoint",
+						"data",
+						"beta",
+						"action",
+						"findOne"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Multiple Documents",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "{{api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collection\":\"{{collection}}\",\n    \"database\":\"{{database}}\",\n    \"dataSource\":\"{{dataSource}}\",\n    \"filter\": { },\n    \"projection\": { },\n    \"sort\": { },\n    \"limit\": 100,\n    \"skip\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://data.mongodb-api.com/app/{{DataAPIAppID}}/endpoint/data/beta/action/find",
+					"protocol": "https",
+					"host": [
+						"data",
+						"mongodb-api",
+						"com"
+					],
+					"path": [
+						"app",
+						"{{DataAPIAppID}}",
+						"endpoint",
+						"data",
+						"beta",
+						"action",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert a Single Document",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"should have insertedId field\", function () {",
+							"    pm.expect(jsonData).to.have.property('insertedId');",
+							"})",
+							"",
+							"pm.test(\"should have valid insertedId value\", function () {",
+							"    pm.expect(jsonData.insertedId).to.not.be.null;",
+							"    pm.expect(jsonData.insertedId).to.not.be.undefined; ",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "{{api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collection\":\"{{collection}}\",\n    \"database\":\"{{database}}\",\n    \"dataSource\":\"{{dataSource}}\",\n    \"document\": { \n        \"text\": \"If it's free, take three\",\n        \"author\": \"Wise Soul\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://data.mongodb-api.com/app/{{DataAPIAppID}}/endpoint/data/beta/action/insertOne",
+					"protocol": "https",
+					"host": [
+						"data",
+						"mongodb-api",
+						"com"
+					],
+					"path": [
+						"app",
+						"{{DataAPIAppID}}",
+						"endpoint",
+						"data",
+						"beta",
+						"action",
+						"insertOne"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Multiple Documents",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "{{api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collection\":\"{{collection}}\",\n    \"database\":\"{{database}}\",\n    \"dataSource\":\"{{dataSource}}\",\n    \"documents\": [\n        {   \"text\": \"If it's free, take three\", \n            \"author\": \"Wise Soul\" \n        },\n        {\n            \"text\": \"You can observe a lot just by watching.\",\n            \"author\": \"Yogi Berra\"\n        },\n        {\n            \"text\": \"A house divided against itself cannot stand.\",\n            \"author\": \"Abraham Lincoln\"\n        },\n        {\n            \"text\": \"Difficulties increase the nearer we get to the goal.\",\n            \"author\": \"Johann Wolfgang von Goethe\"\n        },\n        {\n            \"text\": \"Fate is in your hands and no one elses\",\n            \"author\": \"Byron Pulsifer\"\n        },\n        {\n            \"text\": \"Be the chief but never the lord.\",\n            \"author\": \"Lao Tzu\"\n        },\n        {\n            \"text\": \"Nothing happens unless first we dream.\",\n            \"author\": \"Carl Sandburg\"\n        },\n        {\n            \"text\": \"Well begun is half done.\",\n            \"author\": \"Aristotle\"\n        },\n        {\n            \"text\": \"Life is a learning experience, only if you learn.\",\n            \"author\": \"Yogi Berra\"\n        },\n        {\n            \"text\": \"Self-complacency is fatal to progress.\",\n            \"author\": \"Margaret Sangster\"\n        },\n        {\n            \"text\": \"Peace comes from within. Do not seek it without.\",\n            \"author\": \"Buddha\"\n        },\n        {\n            \"text\": \"What you give is what you get.\",\n            \"author\": \"Byron Pulsifer\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://data.mongodb-api.com/app/{{DataAPIAppID}}/endpoint/data/beta/action/insertMany",
+					"protocol": "https",
+					"host": [
+						"data",
+						"mongodb-api",
+						"com"
+					],
+					"path": [
+						"app",
+						"{{DataAPIAppID}}",
+						"endpoint",
+						"data",
+						"beta",
+						"action",
+						"insertMany"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Single Document",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]); //200 for updating an existing document, and 201 for when there is no match and {upsert: true}",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "{{api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collection\":\"{{collection}}\",\n    \"database\":\"{{database}}\",\n    \"dataSource\":\"{{dataSource}}\",\n    \"filter\": { \"author\": \"Wise Soul\"},\n    \"update\": {\n        \"$set\": {\n            \"author\": \"Very Wise Soul\"\n        }\n    },\n    \"upsert\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://data.mongodb-api.com/app/{{DataAPIAppID}}/endpoint/data/beta/action/updateOne",
+					"protocol": "https",
+					"host": [
+						"data",
+						"mongodb-api",
+						"com"
+					],
+					"path": [
+						"app",
+						"{{DataAPIAppID}}",
+						"endpoint",
+						"data",
+						"beta",
+						"action",
+						"updateOne"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Multiple Documents",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]); //200 for updating an existing document, and 201 for when there is no match and {upsert: true}",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "{{api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collection\":\"{{collection}}\",\n    \"database\":\"{{database}}\",\n    \"dataSource\":\"{{dataSource}}\",\n    \"filter\": { \"author\": \"Wise Soul\"},\n    \"update\": {\n        \"$set\": {\n            \"author\": \"Very Wise Soul\"\n        }\n    },\n    \"upsert\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://data.mongodb-api.com/app/{{DataAPIAppID}}/endpoint/data/beta/action/updateMany",
+					"protocol": "https",
+					"host": [
+						"data",
+						"mongodb-api",
+						"com"
+					],
+					"path": [
+						"app",
+						"{{DataAPIAppID}}",
+						"endpoint",
+						"data",
+						"beta",
+						"action",
+						"updateMany"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Replace a Single Document",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]); //200 for updating an existing document, and 201 for when there is no match and {upsert: true}",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "{{api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collection\":\"{{collection}}\",\n    \"database\":\"{{database}}\",\n    \"dataSource\":\"{{dataSource}}\",\n    \"filter\": { \"author\": \"Wise Soul\"},\n    \"replacement\": { \n        \"text\": \"If it's free, take three\",\n        \"author\": \"Very Very Wise Soul\"\n    },\n    \"upsert\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://data.mongodb-api.com/app/{{DataAPIAppID}}/endpoint/data/beta/action/replaceOne",
+					"protocol": "https",
+					"host": [
+						"data",
+						"mongodb-api",
+						"com"
+					],
+					"path": [
+						"app",
+						"{{DataAPIAppID}}",
+						"endpoint",
+						"data",
+						"beta",
+						"action",
+						"replaceOne"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Single Document",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "{{api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collection\":\"{{collection}}\",\n    \"database\":\"{{database}}\",\n    \"dataSource\":\"{{dataSource}}\",\n    \"filter\": { \"author\": \"Wise Soul\"}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://data.mongodb-api.com/app/{{DataAPIAppID}}/endpoint/data/beta/action/deleteOne",
+					"protocol": "https",
+					"host": [
+						"data",
+						"mongodb-api",
+						"com"
+					],
+					"path": [
+						"app",
+						"{{DataAPIAppID}}",
+						"endpoint",
+						"data",
+						"beta",
+						"action",
+						"deleteOne"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Multiple Documents",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "{{api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collection\":\"{{collection}}\",\n    \"database\":\"{{database}}\",\n    \"dataSource\":\"{{dataSource}}\",\n    \"filter\": { \"author\": \"Wise Soul\"}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://data.mongodb-api.com/app/{{DataAPIAppID}}/endpoint/data/beta/action/deleteMany",
+					"protocol": "https",
+					"host": [
+						"data",
+						"mongodb-api",
+						"com"
+					],
+					"path": [
+						"app",
+						"{{DataAPIAppID}}",
+						"endpoint",
+						"data",
+						"beta",
+						"action",
+						"deleteMany"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Run an Aggregation Pipeline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "{{api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collection\":\"{{collection}}\",\n    \"database\":\"{{database}}\",\n    \"dataSource\":\"{{dataSource}}\",\n    \"pipeline\": [\n        {\n          \"$group\": {\n            \"_id\": \"$author\",\n            \"count\": { \"$sum\": 1 },\n            \"text\": { \"$push\": \"$text\" }\n          }\n        },\n        { \"$sort\": { \"count\": -1 } }\n      ]\n   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://data.mongodb-api.com/app/{{DataAPIAppID}}/endpoint/data/beta/action/aggregate",
+					"protocol": "https",
+					"host": [
+						"data",
+						"mongodb-api",
+						"com"
+					],
+					"path": [
+						"app",
+						"{{DataAPIAppID}}",
+						"endpoint",
+						"data",
+						"beta",
+						"action",
+						"aggregate"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
